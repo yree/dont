@@ -1,6 +1,6 @@
-# dont<span id="text"></span> 😌
+# dont<span id="task-text"></span><span id="text"></span> 😌
 
-## Hey there 👋
+## Hey <span id="name"></span> 👋
 
 Quiet your mind.
 
@@ -23,6 +23,8 @@ This timer tracks the time you've chosen not to act. No chasing goals, no distra
     const text = document.getElementById('text');
     const counterElem = document.getElementById("counter");
     const maxDontTimeElem = document.getElementById("most-dont-time");
+    const nameElem = document.getElementById('name');
+    const taskTextElem = document.getElementById('task-text');
 
     let breatheLines = 0, breatheState = 0;
     const maxBreatheLines = 16;
@@ -30,6 +32,11 @@ This timer tracks the time you've chosen not to act. No chasing goals, no distra
     const breathingState = document.getElementById('breathing-state');
     const breathingLabels = ["Inhale", "Hold", "Exhale"];
     let breathingInterval;
+
+    function getQueryParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
 
     function updateMaxTime() {
         if (idleTime > mostIdleTime) {
@@ -138,6 +145,22 @@ This timer tracks the time you've chosen not to act. No chasing goals, no distra
     window.onload = function() {
         startIdleTimer();
         startInhale();
+
+        // Get and apply query parameters
+        const nameParam = getQueryParameter('name');
+        const taskParam = getQueryParameter('task');
+
+        if (nameParam) {
+            nameElem.textContent = nameParam;
+        } else {
+            nameElem.textContent = "there";
+        }
+
+        if (taskParam) {
+            taskTextElem.textContent = ` ${taskParam}`;
+        } else {
+            taskTextElem.textContent = "";
+        }
     };
 
 </script>
